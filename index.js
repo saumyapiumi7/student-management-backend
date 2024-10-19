@@ -12,14 +12,14 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 // MongoDB connection URL (replace credentials with your own)
-const mongourl = 'mongodb+srv://Saumya:12345@cluster0.cupbt.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0';
+const mongourl = 'mongodb+srv://Saumya:12345@cluster0.cupbt.mongodb.net/studentDB?retryWrites=true&w=majority';
 
-mongoose.connect(mongourl, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-})
-.then(() => console.log('MongoDB connected...'))
-.catch(err => console.error('Could not connect to MongoDB:', err));
+mongoose.connect(mongourl)
+    .then(() => console.log('MongoDB connected...'))
+    .catch(err => {
+        console.error('MongoDB connection error:', err.message);
+        process.exit(1);  // Exit process on failure to connect
+    });
 
 // Get all students
 app.get('/student', async (req, res) => {
@@ -61,14 +61,14 @@ app.put('/student/:id', async (req, res) => {
 
 // Delete a student
 app.delete('/student/:reg', (req, res) => {
-    const reg = req.params.reg; // Get the 'reg' value from the URL parameters
+    const reg = req.params.reg;  // Get the 'reg' value from the URL parameters
     
-    Student.findOneAndDelete({ reg: reg }) // Find student by 'reg' and delete
+    Student.findOneAndDelete({ reg })  // Find student by 'reg' and delete
         .then(() => {
-            res.status(200).send('Student deleted successfully'); // Send success response
+            res.status(200).send('Student deleted successfully');  // Send success response
         })
         .catch((error) => {
-            res.status(400).send({ error: 'Error deleting student', details: error }); // Send error response if deletion fails
+            res.status(400).send({ error: 'Error deleting student', details: error });  // Send error response if deletion fails
         });
 });
 
