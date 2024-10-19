@@ -12,7 +12,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 // MongoDB connection URL (replace credentials with your own)
-const mongourl = 'mongodb+srv://Saumya:12345@cluster0.cupbt.mongodb.net/studentDB?retryWrites=true&w=majority';
+const mongourl = 'mongodb+srv://saumyapiumi7:pQsQU8xhVeSyaCkV@cluster0.o4ws2.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0';
 
 mongoose.connect(mongourl)
     .then(() => console.log('MongoDB connected...'))
